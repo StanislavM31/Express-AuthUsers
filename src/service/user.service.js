@@ -12,4 +12,14 @@ async function createUser(name, surname, email, pwd){
     return data;
 }
 
-module.exports = {createUser}
+async function authorizationUser(email, pwd){
+    const foundUser = await getUserByEmailDB(email);
+    if(!foundUser.length) throw new Error("user not exist");
+
+    const isMatch = await bcrypt.compare(pwd, foundUser[0].pwd);
+    if(!isMatch) throw new Error("некоректный пароль");
+
+    return `Авторизированный пользователь ${JSON.stringify(foundUser)}`;
+}
+
+module.exports = {createUser, authorizationUser}
