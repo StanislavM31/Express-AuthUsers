@@ -1,5 +1,7 @@
-const app = require('./src/app');
+require("dotenv").config();
 
-app.listen(3000, ()=>{
-    console.log("Server run. Port 3000");
+const app = require("./src/app");
+const port = process.env.PORT;
+app.listen(process.env.PORT, ()=>{
+    console.log('server on port 3000');
 })

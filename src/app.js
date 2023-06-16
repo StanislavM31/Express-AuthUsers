@@ -3,7 +3,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const user = require('./controller/user.controller');
+const cors = require('cors');
 
+app.use(cors());
 app.use('/', bodyParser.json());
 
 app.use('/user', user);

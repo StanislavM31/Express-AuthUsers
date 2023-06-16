@@ -1,15 +1,15 @@
 const express = require('express');
+const {createUser} = require('../service/user.service');
 const route = express.Router();
-const {createUser, authorizationUser} = require("../service/user.service")
 
 
-route.post('/reg', async(req,res)=>{
+route.post("/reg", async(req,res)=>{
     try {
-        const { name, surname, email, pwd} = req.body;
-        const data = await createUser(name, surname, email, pwd);
+        const{name,surname, email, pwd} = req.body;
+        const data = await createUser(name,surname, email, pwd)
         res.send(data);
     } catch (error) {
-        res.send(error.message)
+        res.send(error.message);
     }
 })
 
