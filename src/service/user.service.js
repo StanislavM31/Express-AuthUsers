@@ -12,8 +12,21 @@ async function createUser(name, surname, email, pwd){
 async function hashFunction(password){
     const saltround = 2;
     const data = bcrypt.hash(password, saltround);
-    console.log(data);
     return data;
 }
 
-module.exports = {createUser}
+async function autorization(email, password){
+    const foundUser = await getUserByEmailDB(email);
+    console.log(foundUser);
+    if(!foundUser.length) throw new Error('пользователя с таким email не найдено');
+
+    const hashedPwd = foundUser[0].pwd;
+    console.log(password);
+    console.log(hashedPwd);
+    //if (!(await bcrypt.compare(pwd, hashedPwdFromDB))) throw new Error("введенный пароль не соответствует паролю в DB");
+    if(! (await bcrypt.compare(password, hashedPwd))) throw new Error("Введенный пароль не совпадает с паролем в БД")
+    return foundUser;
+
+}
+
+module.exports = {createUser, autorization}
