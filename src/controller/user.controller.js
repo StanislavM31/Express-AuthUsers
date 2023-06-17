@@ -1,8 +1,9 @@
 const express = require("express");
 const { createUser, autorization } = require("../service/user.service");
+const {isValid} = require("../helper/validation")
 const route = express.Router();
 
-route.post("/reg", async (req, res) => {
+route.post("/reg", isValid, async (req, res) => {
   try {
     const { name, surname, email, pwd } = req.body;
     const data = await createUser(name, surname, email, pwd);
