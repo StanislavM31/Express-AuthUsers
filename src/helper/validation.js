@@ -1,14 +1,18 @@
-function isValid(req, res, next){
-    const{name, surname, email, pwd} = req.body;
+function isValidUser(reg, res, next) {
+  const { name, surname, email, pwd } = reg.body;
 
-    if(!name || !name.length) throw new Error('name не должно быть пустым')
-    if(!surname) throw new Error('surname не должно быть пустым')
-    if(!email) throw new Error('email не должно быть пустым')
-    if(!pwd) throw new Error(' pwd не должно быть пустым')
+  if (!name) throw new Error("name не должно быть пустым");
+  if (!surname) throw new Error("surname не должно быть пустым");
+  if (!email) throw new Error("email не должно быть пустым");
+  if (!pwd) throw new Error(" pwd не должно быть пустым");
 
-    if(!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/gm.test(email)) throw new Error('неверный формат email');
+  if(!isNaN(name)) throw new Error("имя не должно содержать числа");
+  if(!isNaN(surname)) throw new Error("фамилия не должно содержать числа");
+  if(pwd.length<9) throw new Error('пароль не должен быть меньше 8');
 
-    next();
+  if (!/^[a-z0-9\_\.\-]+@[a-z]+\.[a-z]{2,3}$/gm.test(email)) throw new Error("неверный формат email");
+
+  next();
 }
 
-module.exports = {isValid}
+module.exports = { isValidUser };
