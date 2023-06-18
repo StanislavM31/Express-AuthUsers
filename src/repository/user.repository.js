@@ -1,7 +1,6 @@
 const pool = require("../db");
 
 async function createUserDB(name, surname, email, pwd) {
-  console.log(name, surname, email, pwd);
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
